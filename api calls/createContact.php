@@ -38,8 +38,8 @@
     $response["website"] = $website;
     $response["email"] = $email;
 
-    // bare minimum to create a contact is the user_id and the contact name
-    if (isset($input['user_id']) && isset($input['name']))
+    // bare minimum to create a contact is the user_id
+    if (isset($input['user_id']))
     {
         $insert_query = "INSERT INTO `$contact_table` (`user_id`, `name`, `phone`, `address`, `website`, `email`) VALUES (?, ?, ?, ?, ?, ?)";
         if ($stmt = $con->prepare($insert_query))
