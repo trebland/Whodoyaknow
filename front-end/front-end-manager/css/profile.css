@@ -1,0 +1,23 @@
+.form {
+    display: block;
+    width: 200px;
+    height: auto 100px;
+}
+
+.fullname-form {
+    display:block;
+    width: 100px;
+}
+
+.form-title {
+    font-weight: bold;
+    width: 200px;
+}
+
+.form-item {
+    margin: 10px;
+}
+
+.submit-button {
+    margin-bottom: 50px;
+}
