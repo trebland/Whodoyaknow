@@ -33,9 +33,8 @@
     $response["password"] = $password;
     $response["full_name"] = $full_name;
 
-    // check that these three fields aren't empty because the
-    // JSON fields should have username, password, and full_name
-    if (isset($input['username']) && isset($input['password']) && isset($input['full_name']))
+    // check that username and password exist
+    if (isset($input['username']) && isset($input['password']))
     {
         // check if username is taken
         if (!userExists($username))

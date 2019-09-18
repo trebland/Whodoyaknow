@@ -24,19 +24,19 @@
     $response["contact_id"] = $contact_id;
     $response["name"] = $name;
 
-    // check that we have contact_id and name so that we delete the correct contact
-    if (isset($input['contact_id']) && isset($input['name']))
+    // check that we have contact_id so that we delete the correct contact
+    if (isset($input['contact_id']))
     {
-        $delete_query = "DELETE FROM `$contact_table` WHERE `contact_id` = ? AND `name` = ?";
+        $delete_query = "DELETE FROM `$contact_table` WHERE `contact_id` = ?";
         if ($stmt = $con->prepare($delete_query))
         {
-            $stmt->bind_param("is", $contact_id, $name);
+            $stmt->bind_param("i", $contact_id);
             if ($stmt->execute())
             {
                 if ($stmt->affected_rows > 0)
                 {
                     $response["status"] = 0;
-                    $response["message"] = "Successfully deleted " . $name . " from the database.";
+                    $response["message"] = "Successfully deleted the contact from the database.";
                 }
                 elseif ($stmt->affected_rows === 0)
                 {
