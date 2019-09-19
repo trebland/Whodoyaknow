@@ -25,6 +25,7 @@
     $response["username"] = $username;
     $response["full_name"] = $new_name;
 
+    // check that user_id exists
     if (isset($input['user_id']))
     {
         // check if both full_name and password need to be updated

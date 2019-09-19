@@ -29,7 +29,8 @@
     $response["website"] = $website;
     $response["email"] = $email;
 
-    if (isset($input['contact_id']))
+    // check that contact_id and name exist
+    if (isset($input['contact_id']) && isset($input['name']))
     {
         $update_query = "UPDATE `$contact_table` SET `name` = ?, `phone` = ?, `address` = ?,
                          `website` = ?, `email` = ? WHERE `contact_id` = ?";
