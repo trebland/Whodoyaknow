@@ -16,11 +16,6 @@
     $user_id = $input['user_id'];
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
-    /*
-    $contact_id = intval($contact_id);
-    $user_id = intval($user_id);
-    */
-
     $response["contact_id"] = $contact_id;
     $response["user_id"] = $user_id;
 

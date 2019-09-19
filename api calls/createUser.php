@@ -20,21 +20,14 @@
     $full_name = $input['full_name'];
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
-    /*
-    // sanitize the strings to prevent SQL injection attacks
-    $username = mysqli_real_escape_string($con, $username);
-    $password = mysqli_real_escape_string($con, $password);
-    $full_name = mysqli_real_escape_string($con, $full_name);
-    */
-
     // response array will become our JSON output
     $response["username"] = $username;
-    // do I need to pass the password?
-    $response["password"] = $password;
+    // decided not to return password
+    // $response["password"] = $password;
     $response["full_name"] = $full_name;
 
-    // check that username and password exist
-    if (isset($input['username']) && isset($input['password']))
+    // check that username, password, and full_name exist
+    if (isset($input['username']) && isset($input['password']) && isset($input['full_name']))
     {
         // check if username is taken
         if (!userExists($username))

@@ -16,11 +16,6 @@
     $search = $input['search'];
     
     // apparently don't need to sanitize the vars when using prepare and bind_param
-    /*
-    $user_id = intval($user_id);
-    $search = mysqli_real_escape_string($con, $search);
-    */
-
     $response["user_id"] = $user_id;
     $response["search"] = $search;
 

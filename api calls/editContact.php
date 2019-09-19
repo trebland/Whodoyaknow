@@ -21,16 +21,6 @@
     $email = $input['email'];
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
-    /*
-    $contact_id = intval($contact_id);
-    $user_id = intval($user_id);
-    $name = mysqli_real_escape_string($con, $name);
-    $phone = mysqli_real_escape_string($con, $phone);
-    $address = mysqli_real_escape_string($con, $address);
-    $website = mysqli_real_escape_string($con, $website);
-    $email = mysqli_real_escape_string($con, $email);
-    */
-
     $response["contact_id"] = $contact_id;
     $response["user_id"] = $user_id;
     $response["name"] = $name;
@@ -42,10 +32,10 @@
     if (isset($input['contact_id']))
     {
         $update_query = "UPDATE `$contact_table` SET `name` = ?, `phone` = ?, `address` = ?,
-                         `website` = ?, `email` = ? WHERE `contact_id` = ? AND `user_id` = ?";
+                         `website` = ?, `email` = ? WHERE `contact_id` = ?";
         if ($stmt = $con->prepare($update_query))
         {
-            $stmt->bind_param("sssssii", $name, $phone, $address, $website, $email, $contact_id, $user_id);
+            $stmt->bind_param("sssssi", $name, $phone, $address, $website, $email, $contact_id);
             if ($stmt->execute())
             {
                 if ($stmt->affected_rows > 0)
