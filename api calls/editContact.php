@@ -13,7 +13,6 @@
     $input = json_decode($input_JSON, TRUE);
 
     $contact_id = $input['contact_id'];
-    $user_id = $input['user_id'];
     $name = $input['name'];
     $phone = $input['phone'];
     $address = $input['address'];
@@ -22,7 +21,6 @@
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
     $response["contact_id"] = $contact_id;
-    $response["user_id"] = $user_id;
     $response["name"] = $name;
     $response["phone"] = $phone;
     $response["address"] = $address;
@@ -72,7 +70,7 @@
     else
     {
         $response["status"] = 2;
-        $response["message"] = "Required field (contact_id) is missing information.";
+        $response["message"] = "Required field (contact_id or name) is missing information.";
     }
 
     echo json_encode($response);

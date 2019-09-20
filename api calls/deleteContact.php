@@ -60,7 +60,7 @@
     else
     {
         $response["status"] = 2;
-        $response["message"] = "Required field (contact_id or name) is missing information.";
+        $response["message"] = "Required field (contact_id) is missing information.";
     }
 
     echo json_encode($response);

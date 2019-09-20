@@ -64,7 +64,7 @@
     else
     {
         $response["status"] = 2;
-        $response["message"] = "Required field (user_id or search info) is missing information.";
+        $response["message"] = "Required field (user_id or search) is missing information.";
     }
 
     echo json_encode($response);

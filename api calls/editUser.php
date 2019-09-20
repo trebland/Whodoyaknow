@@ -14,7 +14,6 @@
 
     // these variables need to remain before if condition
     $user_id = $input['user_id'];
-    $username = $input['username'];
     $password = $input['password'];
     $new_pass = $input['new_pass'];
     $full_name = $input['full_name'];
@@ -22,7 +21,6 @@
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
     $response["user_id"] = $user_id;
-    $response["username"] = $username;
     $response["full_name"] = $new_name;
 
     // check that user_id exists
@@ -161,7 +159,7 @@
     else
     {
         $response["status"] = 2;
-        $response["message"] = "Required field (user_id or username) is missing information.";
+        $response["message"] = "Required field (user_id) is missing information.";
     }
 
     echo json_encode($response);
