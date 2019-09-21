@@ -13,24 +13,17 @@
     $input = json_decode($input_JSON, TRUE);
 
     $contact_id = $input['contact_id'];
-    $user_id = $input['user_id'];
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
-    /*
-    $contact_id = intval($contact_id);
-    $user_id = intval($user_id);
-    */
-
     $response["contact_id"] = $contact_id;
-    $response["user_id"] = $user_id;
 
     // contact_id and user_id needed to lookup matching contacts from the database
-    if (isset($input['contact_id']) && isset($input['user_id']))
+    if (isset($input['contact_id']))
     {
-        $select_query = "SELECT `name`, `phone`, `address`, `website`, `email` FROM `$contact_table` WHERE `contact_id` = ? AND `user_id` = ?";
+        $select_query = "SELECT `name`, `phone`, `address`, `website`, `email` FROM `$contact_table` WHERE `contact_id` = ?";
         if ($stmt = $con->prepare($select_query))
         {
-            $stmt->bind_param("ii", $contact_id, $user_id);
+            $stmt->bind_param("i", $contact_id);
             if ($stmt->execute())
             {
                 $stmt->bind_result($name, $phone, $address, $website, $email);
@@ -67,7 +60,7 @@
     else
     {
         $response["status"] = 2;
-        $response["message"] = "Required field (contact_id or user_id) is missing information.";
+        $response["message"] = "Required field (contact_id) is missing information.";
     }
 
     echo json_encode($response);

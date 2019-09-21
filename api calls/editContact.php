@@ -13,7 +13,6 @@
     $input = json_decode($input_JSON, TRUE);
 
     $contact_id = $input['contact_id'];
-    $user_id = $input['user_id'];
     $name = $input['name'];
     $phone = $input['phone'];
     $address = $input['address'];
@@ -21,31 +20,21 @@
     $email = $input['email'];
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
-    /*
-    $contact_id = intval($contact_id);
-    $user_id = intval($user_id);
-    $name = mysqli_real_escape_string($con, $name);
-    $phone = mysqli_real_escape_string($con, $phone);
-    $address = mysqli_real_escape_string($con, $address);
-    $website = mysqli_real_escape_string($con, $website);
-    $email = mysqli_real_escape_string($con, $email);
-    */
-
     $response["contact_id"] = $contact_id;
-    $response["user_id"] = $user_id;
     $response["name"] = $name;
     $response["phone"] = $phone;
     $response["address"] = $address;
     $response["website"] = $website;
     $response["email"] = $email;
 
-    if (isset($input['contact_id']))
+    // check that contact_id and name exist
+    if (isset($input['contact_id']) && isset($input['name']))
     {
         $update_query = "UPDATE `$contact_table` SET `name` = ?, `phone` = ?, `address` = ?,
-                         `website` = ?, `email` = ? WHERE `contact_id` = ? AND `user_id` = ?";
+                         `website` = ?, `email` = ? WHERE `contact_id` = ?";
         if ($stmt = $con->prepare($update_query))
         {
-            $stmt->bind_param("sssssii", $name, $phone, $address, $website, $email, $contact_id, $user_id);
+            $stmt->bind_param("sssssi", $name, $phone, $address, $website, $email, $contact_id);
             if ($stmt->execute())
             {
                 if ($stmt->affected_rows > 0)
@@ -81,7 +70,7 @@
     else
     {
         $response["status"] = 2;
-        $response["message"] = "Required field (contact_id) is missing information.";
+        $response["message"] = "Required field (contact_id or name) is missing information.";
     }
 
     echo json_encode($response);

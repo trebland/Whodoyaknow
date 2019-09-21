@@ -16,12 +16,6 @@
     $name = $input['name'];
     
     // apparently don't need to sanitize the vars when using prepare and bind_param
-    /*
-    $contact_id = intval($contact_id);
-    $name = mysqli_real_escape_string($con, $name);
-    */
-
-    $response["contact_id"] = $contact_id;
     $response["name"] = $name;
 
     // check that we have contact_id so that we delete the correct contact
@@ -66,7 +60,7 @@
     else
     {
         $response["status"] = 2;
-        $response["message"] = "Required field (contact_id or name) is missing information.";
+        $response["message"] = "Required field (contact_id) is missing information.";
     }
 
     echo json_encode($response);

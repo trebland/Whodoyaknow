@@ -22,15 +22,6 @@
     $email = $input['email'];
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
-    /*
-    $user_id = intval($user_id);
-    $name = mysqli_real_escape_string($con, $name);
-    $phone = mysqli_real_escape_string($con, $phone);
-    $address = mysqli_real_escape_string($con, $address);
-    $website = mysqli_real_escape_string($con, $website);
-    $email = mysqli_real_escape_string($con, $email);
-    */
-
     $response["user_id"] = $user_id;
     $response["name"] = $name;
     $response["phone"] = $phone;
@@ -38,8 +29,8 @@
     $response["website"] = $website;
     $response["email"] = $email;
 
-    // bare minimum to create a contact is the user_id
-    if (isset($input['user_id']))
+    // bare minimum to create a contact is the user_id and name
+    if (isset($input['user_id']) && isset($input['name']))
     {
         $insert_query = "INSERT INTO `$contact_table` (`user_id`, `name`, `phone`, `address`, `website`, `email`) VALUES (?, ?, ?, ?, ?, ?)";
         if ($stmt = $con->prepare($insert_query))

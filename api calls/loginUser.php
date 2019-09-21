@@ -16,13 +16,7 @@
     $password = $input['password'];
     
     // apparently don't need to sanitize the vars when using prepare and bind_param
-    /*
-    $username = mysqli_real_escape_string($con, $username);
-    $password = mysqli_real_escape_string($con, $password);
-    */
-    
     $response["username"] = $username;
-    $response["password"] = $password;
 
     // check that username and password exist
     if (isset($input['username']) && isset($input['password']))
