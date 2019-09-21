@@ -19,7 +19,8 @@
 
 .contact-item {
     display: inline-block;
-    padding-right: 1em;
+    margin-right: 1em;
+    margin-top: 1em;
 }
 
 .contact-name {
@@ -82,4 +83,85 @@
     overflow: hidden;
     transition: max-height 0.2s ease-out;
 }
-  
+
+.search-input {
+    width: 50%
+}
+
+.search-button {
+    margin-right: 20px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%;
+}
+
+.dm-content {
+  width: 15%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: left;
+  align-content: left;
+  flex-direction: column;
+}
+
+.delete-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: space-around;
+    flex-direction: column;
+}
+
+.form-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 0.5em;
+}
+
+.form-item {
+  margin: 1em 1em 1em 0em;
+  max-width: 200px;
+}
+
+.submit-button {
+  margin: 1em 0em 0em 0em;
+}
