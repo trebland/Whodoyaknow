@@ -19,7 +19,6 @@
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
     $response["user_id"] = $user_id;
-    $response["full_name"] = $new_name;
 
     // check that user_id exists
     if (isset($input['user_id']))
