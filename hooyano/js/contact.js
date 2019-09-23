@@ -6,7 +6,7 @@ function PopulateList()
 
   // Create a request variable and assign a new XMLHttpRequest object to it.
   var xhr = new XMLHttpRequest();
-  var url = "https://projectrepository.info/hooyano/api/getAllContact.php";
+  var url = "api/getAllContact.php";
 
   // Sending and receiving data in JSON format using POST method
   xhr.open("POST", url, true);
@@ -14,41 +14,177 @@ function PopulateList()
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
           var json = JSON.parse(xhr.responseText);
-          var contacts = json.contacts;
-          contacts.forEach(
-            CreateAccordion(contacts[1], contacts[2],
-              contacts[3], contacts[4], contacts[5])
-          );
+          if(json.status != 0)
+            {
+                alert(json.message);
+                return;
+            }
+          if(json.contacts)
+          {
+            var contacts = json.contacts;
+            contacts.forEach( function (obj)
+            {
+              CreateAccordion(obj.contact_id, obj.name, obj.phone,
+                obj.address, obj.email, obj.website);
+            }
+            );
+          }
+          else
+          {
+            alert(json.message);
+          }
       }
       else {
         console.log('error')
       }
   };
-  var data = JSON.stringify({"user_id": "101010"});
+  var data = JSON.stringify({"user_id": readCookie("user_id")});
+  xhr.send(data);
+}
+
+function AddContact()
+{
+  
+  // Create a request variable and assign a new XMLHttpRequest object to it.
+  var xhr = new XMLHttpRequest();
+  var url = "api/createContact.php";
+
+  var name = document.getElementById("a-name").value;
+  var number = document.getElementById("a-number").value;
+  var address = document.getElementById("a-address").value;
+  var email = document.getElementById("a-email").value;
+  var website = document.getElementById("a-website").value;
+
+  // Sending and receiving data in JSON format using POST method
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+          console.log(json.message);
+          if(json.status != 0)
+            {
+                alert(json.message);
+                return;
+            }
+          location.replace("contact-page.html");
+      }
+      else {
+        alert("ERROR");
+      }
+  };
+  var data = JSON.stringify({"user_id": readCookie("user_id"),
+   "name": name,"phone": number, "address": address,"email": email, "website": website});
+  xhr.send(data);
+}
+
+function EditContact()
+{
+  
+  // Create a request variable and assign a new XMLHttpRequest object to it.
+  var xhr = new XMLHttpRequest();
+  var url = "api/createContact.php";
+
+  var name = document.getElementById("a-name").value;
+  var number = document.getElementById("a-number").value;
+  var address = document.getElementById("a-address").value;
+  var email = document.getElementById("a-email").value;
+  var website = document.getElementById("a-website").value;
+
+  // Sending and receiving data in JSON format using POST method
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+          console.log(json.message);
+          if(json.status != 0)
+            {
+                alert(json.message);
+                return;
+            }
+          location.replace("contact-page.html");
+      }
+      else {
+        alert("ERROR");
+      }
+  };
+  var data = JSON.stringify({"user_id": readCookie("user_id"),
+   "name": name,"phone": number, "address": address,"email": email, "website": website});
+  xhr.send(data);
+}
+
+function DeleteContact()
+{
+  var idContainer = document.getElementById("myLI").parentElement;
+  console.log(idContainer.nodeName);
+
+  // Create a request variable and assign a new XMLHttpRequest object to it.
+  var xhr = new XMLHttpRequest();
+  var url = "api/deleteContact.php";
+
+  var name = document.getElementById("a-name").value;
+  var number = document.getElementById("a-number").value;
+  var address = document.getElementById("a-address").value;
+  var email = document.getElementById("a-email").value;
+  var website = document.getElementById("a-website").value;
+
+  // Sending and receiving data in JSON format using POST method
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+          console.log(json.message);
+          if(json.status != 0)
+            {
+                alert(json.message);
+                return;
+            }
+          location.replace("contact-page.html");
+      }
+      else {
+        alert("ERROR");
+      }
+  };
+  var data = JSON.stringify({"user_id": readCookie("user_id"),
+   "name": name,"phone": number, "address": address,"email": email, "website": website});
   xhr.send(data);
 }
 
 // Will populate list on search
 function SearchPopulateList()
 {
+
   var user_id = readCookie("user_id");
-  var search = document.getElementById("search-input");
+  var search = document.getElementById("search-input").value;
 
   // Create a request variable and assign a new XMLHttpRequest object to it.
   var xhr = new XMLHttpRequest();
-  var url = "https://projectrepository.info/hooyano/api/getOneContact.php";
+  var url = "api/searchContact.php";
 
   // Sending and receiving data in JSON format using POST method
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function () {
+  xhr.onload = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
+          ClearAccordions();
           var json = JSON.parse(xhr.responseText);
-          var search_results = json.search_results;
-          search_results.forEach(
-            CreateAccordion(search_results[1], search_results[2],
-              search_results[3], search_results[4], search_results[5])
-          );
+          if(json.status != 0)
+            {
+                alert(json.message);
+                return;
+            }
+            if(json.search_results)
+            {
+              var contacts = json.search_results;
+              contacts.forEach( function (obj)
+              {
+                CreateAccordion(obj.contact_id, obj.name, obj.phone,
+                  obj.address, obj.email, obj.website);
+              }
+              );
+            }
       }
       else {
         console.log('error')
@@ -58,18 +194,31 @@ function SearchPopulateList()
   xhr.send(data);
 }
 
-function CreateAccordion(contactName, contactNumber, contactAddress, contactEmail, contactWebsite)
+function ClearAccordions()
+{
+  var mainContainer = document.getElementById("main-container");
+
+  //e.firstElementChild can be used. 
+  var child = mainContainer.lastElementChild;  
+  while (child) { 
+      mainContainer.removeChild(child); 
+      child = mainContainer.lastElementChild; 
+  }
+}
+
+function CreateAccordion(contactId, contactName, contactNumber, contactAddress, contactEmail, contactWebsite)
 {
   var mainContainer = document.getElementById("main-container");
   
   var accordion = document.createElement("button");
   accordion.className = "accordion";
+  mainContainer.appendChild(accordion);
 
   var name = document.createElement("span");
   name.className = "contact-name";
+  name.id = contactId;
   name.innerHTML = contactName;
   accordion.appendChild(name);
-  mainContainer.appendChild(accordion);
 
   var contactContainer = document.createElement("div");
   contactContainer.className = "contact-content";

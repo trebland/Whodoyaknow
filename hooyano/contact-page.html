@@ -37,11 +37,11 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
 
-      <div id="main-container" class="container-fluid">
+      <div class="container-fluid">
         <span>
           <h1 class="mt-4">Contacts</h1>
-          Search Contacts: <input class="search-input" type="text" name="fname">
-          <button class="search-button">Search</button>
+          Search Contacts: <input placeholder="Search..." id="search-input" type="text" name="fname">
+          <button onclick="SearchPopulateList()" class="search-button">Search</button>
           <button onclick="AddModal()">Add Contact</button>
           <div id="addModal" class="modal">
 
@@ -50,28 +50,26 @@
                 <span id="closeAModal" class="close">&times;</span>
                 <div class="form-container">
                 <span class="form-title">Add Contact Information</span>
-                  <form action="">
-                    <div class="contact-add-form">
-                      <div class="name-input form-item">
-                        Name: <input type="text" name="fname">
-                      </div>
-                      <div class="number-input form-item">
-                        Number: <input type="text" name="fname">
-                      </div>
-                      <div class="address-input form-item">
-                        Address: <input type="text" name="fname">
-                      </div>
-                      <div class="email-input form-item">
-                        Email: <input type="text" name="fname">
-                      </div>
-                      <div class="website-input form-item">
-                        Website: <input type="text" name="fname">
-                      </div>
-                      <div class="form-item">
-                          <input class="submit-button" type="submit" value="Add Contact">
-                      </div>
+                  <div class="contact-add-form">
+                    <div class="name-input form-item">
+                      Name: <input id="a-name" type="text" name="fname">
                     </div>
-                  </form>
+                    <div class="number-input form-item">
+                      Number: <input id="a-number" type="text" name="fname">
+                    </div>
+                    <div class="address-input form-item">
+                      Address: <input id="a-address" type="text" name="fname">
+                    </div>
+                    <div class="email-input form-item">
+                      Email: <input id="a-email"  type="text" name="fname">
+                    </div>
+                    <div class="website-input form-item">
+                      Website: <input id="a-website"  type="text" name="fname">
+                    </div>
+                    <div class="form-item">
+                        <button onclick="AddContact()" type="submit" class="submit-button">Add Contact</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             
@@ -80,7 +78,7 @@
         </span>
         <hr>
 
-        <div id="main-container">
+        <div id="main-container" class="container-fluid">
           
         </div>
         
