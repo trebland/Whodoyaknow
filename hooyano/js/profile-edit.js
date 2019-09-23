@@ -1,77 +1,49 @@
-var urlbase;
-
-function VerifyNameSubmission()
+function VNS()
 {
-    var name;
+    var name = document.getElementById("profile-name-input").value;
 
+    var isValidName = /^[a-zA-Z ]+$/.test(name);
     // Name does not contain certain things
-    if(foobar)
+    if(isValidName)
     {
         // Send user id with name change request
+        SubmitName(name);
+    }
+    else
+    {
+        alert("Name is not valid! Please only use letters");
     }
 
 }
 
-function VerifyPasswordSubmission()
+function VPS()
 {
-    var oldPassword;
-    var newPassword;
-    var confirmPassword;
+    var oldPassword = document.getElementById("profile-opw-input").value;
+    var newPassword = document.getElementById("profile-pw1-input").value;
+    var confirmPassword = document.getElementById("profile-pw2-input").value;
 
     // if oldPassword matches to the user id
     // .. PROCEED
     if (newPassword == confirmPassword)
     {
-        // Change Password
+        SubmitPassword(oldPassword, newPassword);
     }
-}
-
-function SubmitEdit()
-{ 
-    xhr = new XMLHttpRequest();
-    var url = "api/editUser.php";
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json");
-    xhr.onreadystatechange = function () { 
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var json = JSON.parse(xhr.responseText);
-            console.log(json.email + ", " + json.name);
-            if(json.status != 0)
-            {
-                alert(json.message);
-                return;
-            }
-        }
-    }
-
-    var name = document.getElementById();
-    var password = document.getElementById();
-
-    var data = 
-    JSON.stringify(
+    else
     {
-    "name":"Thomas Mitchborn",
-    "password":"LARACROFT"
-    });
-
-    xhr.send(data);
+        alert("New passwords do not match!");
+    }
 }
 
-function SubmitName()
-{
-
-}
-
-function SubmitPassword()
+function SubmitName(name)
 {
     // Create a request variable and assign a new XMLHttpRequest object to it.
     var xhr = new XMLHttpRequest();
-    var url = "https://projectrepository.info/hooyano/api/loginUser.php";
+    var url = "api/editNameUser.php";
 
     // Sending and receiving data in JSON format using POST method
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
+    xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var json = JSON.parse(xhr.responseText);
             if(json.status != 0)
@@ -79,13 +51,54 @@ function SubmitPassword()
                 alert(json.message);
                 return;
             }
-            createCookie("user_id", json.userid);
-            location.replace("contact-page.html");
+            location.replace("profile-page.html");
         }
         else {
             console.log('error')
         }
     };
-    var data = JSON.stringify({"password": password});
+    var data = JSON.stringify({"user_id": readCookie("user_id"), "new_name": name});
     xhr.send(data);
 }
+
+function SubmitPassword(oldpass, newpass)
+{
+    // Create a request variable and assign a new XMLHttpRequest object to it.
+    var xhr = new XMLHttpRequest();
+    var url = "api/editPassUser.php";
+
+    // Sending and receiving data in JSON format using POST method
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var json = JSON.parse(xhr.responseText);
+            if(json.status != 0)
+            {
+                alert(json.message);
+                return;
+            }
+            location.replace("profile-page.html");
+        }
+        else {
+            console.log('error')
+        }
+    };
+    var data = JSON.stringify({"user_id": readCookie("user_id"), "password": oldpass, "new_pass": newpass});
+    xhr.send(data);
+}
+
+function readCookie(name) {
+    let key = name + "=";
+    let cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i];
+      while (cookie.charAt(0) === ' ') {
+              cookie = cookie.substring(1, cookie.length);
+          }
+      if (cookie.indexOf(key) === 0) {
+              return cookie.substring(key.length, cookie.length);
+          }
+    }
+    return null;
+  }

@@ -78,18 +78,12 @@ function AddContact()
   xhr.send(data);
 }
 
-function EditContact()
+function EditContact(contactId, name, number, address, email, website)
 {
   
   // Create a request variable and assign a new XMLHttpRequest object to it.
   var xhr = new XMLHttpRequest();
-  var url = "api/createContact.php";
-
-  var name = document.getElementById("a-name").value;
-  var number = document.getElementById("a-number").value;
-  var address = document.getElementById("a-address").value;
-  var email = document.getElementById("a-email").value;
-  var website = document.getElementById("a-website").value;
+  var url = "api/editContact.php";
 
   // Sending and receiving data in JSON format using POST method
   xhr.open("POST", url, true);
@@ -109,25 +103,17 @@ function EditContact()
         alert("ERROR");
       }
   };
-  var data = JSON.stringify({"user_id": readCookie("user_id"),
+  
+  var data = JSON.stringify({"contact_id": contactId,
    "name": name,"phone": number, "address": address,"email": email, "website": website});
   xhr.send(data);
 }
 
-function DeleteContact()
+function DeleteContact(contactId)
 {
-  var idContainer = document.getElementById("myLI").parentElement;
-  console.log(idContainer.nodeName);
-
   // Create a request variable and assign a new XMLHttpRequest object to it.
   var xhr = new XMLHttpRequest();
   var url = "api/deleteContact.php";
-
-  var name = document.getElementById("a-name").value;
-  var number = document.getElementById("a-number").value;
-  var address = document.getElementById("a-address").value;
-  var email = document.getElementById("a-email").value;
-  var website = document.getElementById("a-website").value;
 
   // Sending and receiving data in JSON format using POST method
   xhr.open("POST", url, true);
@@ -147,8 +133,7 @@ function DeleteContact()
         alert("ERROR");
       }
   };
-  var data = JSON.stringify({"user_id": readCookie("user_id"),
-   "name": name,"phone": number, "address": address,"email": email, "website": website});
+  var data = JSON.stringify({"contact_id": contactId});
   xhr.send(data);
 }
 
@@ -221,7 +206,6 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
 
   var contactContainer = document.createElement("div");
   contactContainer.className = "contact-content";
-  contactContainer.id = contactId;
   
   var itemName = document.createElement("p");
   itemName.className = "contact-item";
@@ -251,13 +235,13 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   mainContainer.append(contactContainer);
 
   var editButton = document.createElement("button");
-  editButton.onclick = EditModal;
+  editButton.onclick = function () { EditModal(contactId) };
   editButton.className = "contact-item edit-button";
   editButton.innerHTML = "Edit";
   contactContainer.appendChild(editButton);
 
   var editModal = document.createElement("div");
-  editModal.className = "editModal modal";
+  editModal.className = "editModal modal s" + contactId;
   contactContainer.appendChild(editModal);
 
   var modalContent = document.createElement("div");
@@ -265,7 +249,7 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   editModal.appendChild(modalContent);
 
   var closeModal = document.createElement("span");
-  closeModal.className = "closeEModal close";
+  closeModal.className = "closeEModal close s" + contactId;
   closeModal.innerHTML = "&times;";
   modalContent.appendChild(closeModal);
 
@@ -278,15 +262,10 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   formTitle.innerHTML = "Edit Contact Information";
   formContainer.appendChild(formTitle);
 
-  var form = document.createElement("form");
-  form.action = "";
-  form.className = "contact-edit-form";
-  formContainer.appendChild(form);
-
   var nameContainer = document.createElement("div");
   nameContainer.className = "name-input form-item";
   nameContainer.innerHTML =  "Name: ";
-  form.appendChild(nameContainer);
+  formContainer.appendChild(nameContainer);
 
   var nameInput = document.createElement("input");
   nameInput.type = "text";
@@ -296,7 +275,7 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   var phoneContainer = document.createElement("div");
   phoneContainer.className = "phone-input form-item";
   phoneContainer.innerHTML =  "Phone Number: ";
-  form.appendChild(phoneContainer);
+  formContainer.appendChild(phoneContainer);
 
   var phoneInput = document.createElement("input");
   phoneInput.type = "text";
@@ -306,7 +285,7 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   var addressContainer = document.createElement("div");
   addressContainer.className = "address-input form-item";
   addressContainer.innerHTML =  "Address: ";
-  form.appendChild(addressContainer);
+  formContainer.appendChild(addressContainer);
 
   var addressInput = document.createElement("input");
   addressInput.type = "text";
@@ -316,7 +295,7 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   var emailContainer = document.createElement("div");
   emailContainer.className = "email-input form-item";
   emailContainer.innerHTML =  "Email: ";
-  form.appendChild(emailContainer);
+  formContainer.appendChild(emailContainer);
 
   var emailInput = document.createElement("input");
   emailInput.type = "text";
@@ -326,28 +305,28 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   var websiteContainer = document.createElement("div");
   websiteContainer.className = "website-input form-item";
   websiteContainer.innerHTML =  "Website: ";
-  form.appendChild(websiteContainer);
+  formContainer.appendChild(websiteContainer);
 
   var websiteInput = document.createElement("input");
   websiteInput.type = "text";
   websiteInput.name = "name";
   websiteContainer.appendChild(websiteInput);
 
-  var submitButton = document.createElement("input");
-  submitButton.className = "submit-button " + contactId;
+  var submitButton = document.createElement("button");
+  submitButton.className = "submit-button";
   submitButton.type = "submit";
-  submitButton.value = "Confirm Changes";
-  submitButton.onclick = EditContact;
-  form.appendChild(submitButton);
+  submitButton.innerHTML = "Confirm Changes";
+  submitButton.onclick = function () { EditContact(contactId, nameInput.value, phoneInput.value, addressInput.value, emailInput.value, websiteInput.value) };
+  formContainer.appendChild(submitButton);
 
   var deleteButton = document.createElement("button");
-  deleteButton.onclick = DeleteModal;
+  deleteButton.onclick = function () { DeleteModal(contactId) };
   deleteButton.className = "contact-item delete-button";
   deleteButton.innerHTML = "Delete";
   contactContainer.appendChild(deleteButton);
 
   var deleteModal = document.createElement("div");
-  deleteModal.className = "deleteModal modal";
+  deleteModal.className = "deleteModal modal s" + contactId;
   contactContainer.appendChild(deleteModal);
 
   var modalContent = document.createElement("div");
@@ -355,7 +334,7 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   deleteModal.appendChild(modalContent);
 
   var closeModal = document.createElement("span");
-  closeModal.className = "closeDModal close";
+  closeModal.className = "closeDModal close s" + contactId;
   closeModal.innerHTML = "&times;";
   modalContent.appendChild(closeModal);
 
@@ -368,17 +347,12 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   formTitle.innerHTML = "Delete Contact?";
   formContainer.appendChild(formTitle);
 
-  var form = document.createElement("form");
-  form.action = "";
-  form.className = "contact-edit-form";
-  formContainer.appendChild(form);
-
-  var submitButton = document.createElement("input");
-  submitButton.className = "submit-button " + contactId;
+  var submitButton = document.createElement("button");
+  submitButton.className = "submit-button";
   submitButton.type = "submit";
-  submitButton.value = "Delete Contact";
-  submitButton.onclick = DeleteContact;
-  form.appendChild(submitButton);
+  submitButton.innerHTML = "Delete Contact";
+  submitButton.onclick = function () { DeleteContact(contactId) };
+  formContainer.appendChild(submitButton);
 
   // Add our event listener to our accordion
   accordion.addEventListener("click", function() {
@@ -415,14 +389,16 @@ function AddModal()
   }
 }
 
-function EditModal()
+function EditModal(contactId)
 {
-    // Get the modal
-  var modal = document.getElementsByClassName("editModal")[0];
+  // Get the modal
+  var modalA = document.querySelectorAll(".editModal.s" + contactId);
+  modal = modalA[0];
 
   // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("closeEModal")[0];
-  
+  var spanA = document.querySelectorAll(".closeEModal.s" + contactId);
+  span = spanA[0];
+
   modal.style.display = "block";
 
   // When the user clicks on <span> (x), close the modal
@@ -438,13 +414,15 @@ function EditModal()
   }
 }
 
-function DeleteModal()
+function DeleteModal(contactId)
 {
-    // Get the modal
-  var modal = document.getElementsByClassName("deleteModal")[0];
+  // Get the modal
+  var modalA = document.querySelectorAll(".deleteModal.s" + contactId);
+  modal = modalA[0];
 
   // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("closeDModal")[0];
+  var spanA = document.querySelectorAll(".closeDModal.s" + contactId);
+  span = spanA[0];
   
   modal.style.display = "block";
 

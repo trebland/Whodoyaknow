@@ -42,34 +42,30 @@
         <hr>
 
         <div class="form-container">
-          <form action="">
-            <div class="fullname-form form">
-              <div class="form-title">
-                Change Name
-              </div>
-              <div class="form-item">
-                Full Name: <input type="text" name="fname">
-              </div>
-              <input class="submit-button form-item" type="submit" value="Change Name">
+          <div class="fullname-form form">
+            <div class="form-title">
+              Change Name
             </div>
-          </form>
-          <form action="">
-            <div class="password-form form">
-              <div class="form-title">
-                Reset Password
-              </div>
-              <div class="password-old form-item">
-                Old Password: <input type="text" name="fname">
-              </div>
-              <div class="password-new form-item">
-                New Password: <input type="text" name="fname">
-              </div>
-              <div class="password-new-confirm form-item">
-                Confirm Password: <input type="text" name="fname">
-              </div>
-              <input class="submit-button form-item" type="submit" value="Change Password">
+            <div class="form-item">
+              Full Name: <input id="profile-name-input" type="text" name="fname">
             </div>
-          </form>
+            <button onclick="VNS()" class="submit-button form-item" type="submit">Change Name</button>
+          </div>
+          <div class="password-form form">
+            <div class="form-title">
+              Reset Password
+            </div>
+            <div class="password-old form-item">
+              Old Password: <input id="profile-opw-input" type="text" name="fname">
+            </div>
+            <div class="password-new form-item">
+              New Password: <input id="profile-pw1-input" type="text" name="fname">
+            </div>
+            <div class="password-new-confirm form-item">
+              Confirm Password: <input id="profile-pw2-input" type="text" name="fname">
+            </div>
+            <button onclick="VPS()" class="submit-button form-item" type="submit">Change Password</button>
+          </div>
           <br>
         </div>
 
@@ -83,6 +79,8 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <script src="js/profile-edit.js"></script>
 
   <!-- Menu Toggle Script -->
   <script>
