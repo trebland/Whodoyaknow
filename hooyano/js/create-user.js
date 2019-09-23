@@ -34,8 +34,6 @@ function submitClicked()
 
 function createUser()
 {
-        
-    // output: username, user_id, full_name, created_date, status, and message
     var username = document.getElementById("username").value;
     var fullname = document.getElementById("full_name").value;
     var password = document.getElementById("password1").value;
@@ -43,6 +41,22 @@ function createUser()
     console.log(username);
     console.log(fullname);
     console.log(password);
+
+    var isValidUsername = /^[a-zA-Z0-9]+$/.test(name);
+    // Name does not contain certain things
+    if(!(isValidUsername))
+    {
+        alert("Username is not valid! Please only use letters and numbers.");
+        return;
+    }
+
+    var isValidName = /^[a-zA-Z ]+$/.test(name);
+    // Name does not contain certain things
+    if(!(isValidName))
+    {
+        alert("Name is not valid! Please only use letters.");
+        return;
+    }
 
     // Create a request variable and assign a new XMLHttpRequest object to it.
     var xhr = new XMLHttpRequest();

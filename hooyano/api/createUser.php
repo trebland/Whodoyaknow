@@ -21,10 +21,10 @@
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
     // response array will become our JSON output
-    $response["username"] = $username;
+    // $response["username"] = $username;
     // decided not to return password
     // $response["password"] = $password;
-    $response["full_name"] = $full_name;
+    // $response["full_name"] = $full_name;
 
     // check that username, password, and full_name exist
     if (isset($input['username']) && isset($input['password']) && isset($input['full_name']))

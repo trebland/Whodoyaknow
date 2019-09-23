@@ -51,13 +51,16 @@ function SubmitName(name)
                 alert(json.message);
                 return;
             }
+            createCookie("jwt", json.jwt);
+            createCookie("expireAt", json.expireAt);
             location.replace("profile-page.html");
         }
         else {
             console.log('error')
         }
     };
-    var data = JSON.stringify({"user_id": readCookie("user_id"), "new_name": name});
+
+    var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"), "new_name": name});
     xhr.send(data);
 }
 
@@ -78,27 +81,37 @@ function SubmitPassword(oldpass, newpass)
                 alert(json.message);
                 return;
             }
+            createCookie("jwt", json.jwt);
+            createCookie("expireAt", json.expireAt);
             location.replace("profile-page.html");
         }
         else {
             console.log('error')
         }
     };
-    var data = JSON.stringify({"user_id": readCookie("user_id"), "password": oldpass, "new_pass": newpass});
+    var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"), "password": oldpass, "new_pass": newpass});
     xhr.send(data);
+}
+
+
+function createCookie(key, value) {
+    let cookie = escape(key) + "=" + escape(value) + ";";
+    document.cookie = cookie;
+    console.log(cookie);
+    console.log("Creating new cookie with key: " + key + " value: " + value);
 }
 
 function readCookie(name) {
     let key = name + "=";
     let cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
-      let cookie = cookies[i];
-      while (cookie.charAt(0) === ' ') {
-              cookie = cookie.substring(1, cookie.length);
-          }
-      if (cookie.indexOf(key) === 0) {
-              return cookie.substring(key.length, cookie.length);
-          }
+        let cookie = cookies[i];
+        while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1, cookie.length);
+            }
+        if (cookie.indexOf(key) === 0) {
+                return cookie.substring(key.length, cookie.length);
+            }
     }
     return null;
-  }
+}

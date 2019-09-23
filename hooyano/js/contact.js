@@ -28,6 +28,8 @@ function PopulateList()
                 obj.address, obj.email, obj.website);
             }
             );
+            createCookie("jwt", json.jwt);
+            createCookie("expireAt", json.expireAt);
           }
           else
           {
@@ -38,7 +40,7 @@ function PopulateList()
         console.log('error')
       }
   };
-  var data = JSON.stringify({"user_id": readCookie("user_id")});
+  var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt")});
   xhr.send(data);
 }
 
@@ -67,13 +69,16 @@ function AddContact()
                 alert(json.message);
                 return;
             }
+            
+          createCookie("jwt", json.jwt);
+          createCookie("expireAt", json.expireAt);
           location.replace("contact-page.html");
       }
       else {
         alert("ERROR");
       }
   };
-  var data = JSON.stringify({"user_id": readCookie("user_id"),
+  var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"),
    "name": name,"phone": number, "address": address,"email": email, "website": website});
   xhr.send(data);
 }
@@ -97,6 +102,8 @@ function EditContact(contactId, name, number, address, email, website)
                 alert(json.message);
                 return;
             }
+          createCookie("jwt", json.jwt);
+          createCookie("expireAt", json.expireAt);
           location.replace("contact-page.html");
       }
       else {
@@ -104,7 +111,7 @@ function EditContact(contactId, name, number, address, email, website)
       }
   };
   
-  var data = JSON.stringify({"contact_id": contactId,
+  var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"), "contact_id": contactId,
    "name": name,"phone": number, "address": address,"email": email, "website": website});
   xhr.send(data);
 }
@@ -127,13 +134,16 @@ function DeleteContact(contactId)
                 alert(json.message);
                 return;
             }
+            
+          createCookie("jwt", json.jwt);
+          createCookie("expireAt", json.expireAt);
           location.replace("contact-page.html");
       }
       else {
         alert("ERROR");
       }
   };
-  var data = JSON.stringify({"contact_id": contactId});
+  var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"), "contact_id": contactId});
   xhr.send(data);
 }
 
@@ -141,7 +151,7 @@ function DeleteContact(contactId)
 function SearchPopulateList()
 {
 
-  var user_id = readCookie("user_id");
+  var jwt = readCookie("jwt");
   var search = document.getElementById("search-input").value;
 
   // Create a request variable and assign a new XMLHttpRequest object to it.
@@ -169,13 +179,16 @@ function SearchPopulateList()
                   obj.address, obj.email, obj.website);
               }
               );
+              createCookie("jwt", json.jwt);
+              createCookie("expireAt", json.expireAt);
             }
+
       }
       else {
         console.log('error')
       }
   };
-  var data = JSON.stringify({"user_id": user_id, "search": search});
+  var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"), "search": search});
   xhr.send(data);
 }
 
@@ -438,7 +451,14 @@ function DeleteModal(contactId)
     }
   }
 }
-	
+
+function createCookie(key, value) {
+  let cookie = escape(key) + "=" + escape(value) + ";";
+  document.cookie = cookie;
+  console.log(cookie);
+  console.log("Creating new cookie with key: " + key + " value: " + value);
+}
+
 function readCookie(name) {
   let key = name + "=";
   let cookies = document.cookie.split(';');

@@ -1,3 +1,4 @@
+const newLocal = "user_id";
 function LogIn()
 {
     function createCookie(key, value) {
@@ -7,7 +8,7 @@ function LogIn()
         console.log("Creating new cookie with key: " + key + " value: " + value);
     }
 
-    // output: username, user_id, full_name, created_date, status, and message
+    // output: username, jwt, full_name, created_date, status, and message
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
@@ -27,7 +28,8 @@ function LogIn()
                 alert(json.message);
                 return;
             }
-            createCookie("user_id", json.user_id);
+            createCookie("jwt", json.jwt);
+            createCookie("expireAt", json.expireAt);
             location.replace("contact-page.html");
         }
         else {

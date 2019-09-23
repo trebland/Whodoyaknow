@@ -4,19 +4,14 @@
     // course: COP 4331(Rick Leinecker)
     // purpose: Small Project: Contact Manager(php api in LAMP stack)
 
+    require_once('vendor/autoload.php');
+    use \Firebase\JWT\JWT;
     include 'dbConnection.php';
     include 'functions.php';
-    $response = array();
-    $user_table = "users";
-
-    $input_JSON = file_get_contents('php://input');
-    $input = json_decode($input_JSON, TRUE);
-
-    $username = $input['username'];
-    $password = $input['password'];
+    include 'jwtLoginSetup.php';
     
     // apparently don't need to sanitize the vars when using prepare and bind_param
-    $response["username"] = $username;
+    // $response["username"] = $username;
 
     // check that username and password exist
     if (isset($input['username']) && isset($input['password']))
@@ -39,11 +34,18 @@
                     {
                         // After successful login, we can use $_SESSION to keep user logged in during
                         // their visit and log them out when they want with the same $_SESSION
-                        $response["user_id"] = $user_id;
-                        $response["full_name"] = $full_name;
-                        $response["created_date"] = $created_date;
+                        // $response["user_id"] = $user_id;
+                        // $response["full_name"] = $full_name;
+                        // $response["created_date"] = $created_date;
+
+                        include 'jwtNewLogin.php';
+
+                        // apparently the JWT::encode line can't be in jwtNewLogin.php
+                        $jwt = JWT::encode($token, $jwtKey);
                         $response["status"] = 0;
                         $response["message"] = "Login successful.";
+                        $response["jwt"] = $jwt;
+                        $response["expireAt"] = $expire;
                     }
                     else
                     {
