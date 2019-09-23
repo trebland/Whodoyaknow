@@ -45,8 +45,6 @@
     // $user_id = $input['user_id'];
     $password = $input['password'];
     $new_pass = $input['new_pass'];
-    $full_name = $input['full_name'];
-    $new_name = $input['new_name'];
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
     // $response["user_id"] = $user_id;
@@ -56,105 +54,8 @@
         // check that user_id exists
         if (isset($user_id))
         {
-            // check if both full_name and password need to be updated
-            if ($full_name !== $new_name && $password !== $new_pass)
-            {
-                $salt = getSalt();
-                $hashed_pass = password_hash(concatPasswordWithSalt($new_pass, $salt), PASSWORD_DEFAULT);
-
-                $update_query = "UPDATE $user_table SET `full_name` = ?, `hashed_pass` = ?, `salt` = ? WHERE `user_id` = ?";
-                if ($stmt = $con->prepare($update_query))
-                {
-                    $stmt->bind_param("sssi", $new_name, $hashed_pass, $salt, $user_id);
-                    if ($stmt->execute())
-                    {
-                        if ($stmt->affected_rows > 0)
-                        {
-                            include 'jwtNew.php';
-                            $jwt = JWT::encode($token, $jwtKey);
-                            $response["status"] = 0;
-                            $response["message"] = "User's full name and password has been updated.";
-                            $response["jwt"] = $jwt;
-                            $response["expireAt"] = $expire;
-                        }
-                        elseif ($stmt->affected_rows === 0)
-                        {
-                            include 'jwtNew.php';
-                            $jwt = JWT::encode($token, $jwtKey);
-                            $response["status"] = 0;
-                            $response["message"] = "No changes made to the user's full name or password.";
-                            $response["jwt"] = $jwt;
-                            $response["expireAt"] = $expire;
-                        }
-                        else
-                        {
-                            $response["status"] = 5;
-                            $response["message"] = "Failed to update the user's full name and password.";
-                        }
-                    }
-                    else
-                    {
-                        $response["status"] = 4;
-                        $response["message"] = "Failed to execute query.";
-                    }
-
-                    $stmt->close();
-                }
-                else
-                {
-                    $response["status"] = 3;
-                    $response["message"] = "Failed to prepare query.";
-                }
-            }
-            // check if only full_name needs to be updated
-            elseif ($full_name !== $new_name)
-            {
-                $update_query = "UPDATE $user_table SET `full_name` = ? WHERE `user_id` = ?";
-                if ($stmt = $con->prepare($update_query))
-                {
-                    $stmt->bind_param("si", $new_name, $user_id);
-                    if ($stmt->execute())
-                    {
-                        if ($stmt->affected_rows > 0)
-                        {
-                            include 'jwtNew.php';
-                            $jwt = JWT::encode($token, $jwtKey);
-                            $response["status"] = 0;
-                            $response["message"] = "User's full name has been updated.";
-                            $response["jwt"] = $jwt;
-                            $response["expireAt"] = $expire;
-                        }
-                        elseif ($stmt->affected_rows === 0)
-                        {
-                            include 'jwtNew.php';
-                            $jwt = JWT::encode($token, $jwtKey);
-                            $response["status"] = 0;
-                            $response["message"] = "No changes made to the user's full name.";
-                            $response["jwt"] = $jwt;
-                            $response["expireAt"] = $expire;
-                        }
-                        else
-                        {
-                            $response["status"] = 5;
-                            $response["message"] = "Failed to update the user's full name.";
-                        }
-                    }
-                    else
-                    {
-                        $response["status"] = 4;
-                        $response["message"] = "Failed to execute query.";
-                    }
-
-                    $stmt->close();
-                }
-                else
-                {
-                    $response["status"] = 3;
-                    $response["message"] = "Failed to prepare query.";
-                }
-            }
             // check if only password needs to be updated
-            elseif ($password !== $new_pass)
+            if ($password !== $new_pass)
             {
                 $salt = getSalt();
                 $hashed_pass = password_hash(concatPasswordWithSalt($new_pass, $salt), PASSWORD_DEFAULT);
@@ -206,8 +107,12 @@
             }
             else
             {
+                include 'jwtNew.php';
+                $jwt = JWT::encode($token, $jwtKey);
                 $response["status"] = 0;
                 $response["message"] = "No change made.";
+                $response["jwt"] = $jwt;
+                $response["expireAt"] = $expire;
             }
         }
         else
