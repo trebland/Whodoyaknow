@@ -41,7 +41,7 @@
         http_response_code(400);
     }
 
-    if ($input['expireAt'] > time())
+    if ($decoded['exp'] > time())
     {
         // user_id needed to lookup matching contacts from the database
         if (isset($user_id))

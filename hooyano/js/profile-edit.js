@@ -60,7 +60,7 @@ function SubmitName(name)
         }
     };
 
-    var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"), "new_name": name});
+    var data = JSON.stringify({"jwt": readCookie("jwt"), "new_name": name});
     xhr.send(data);
 }
 
@@ -89,7 +89,7 @@ function SubmitPassword(oldpass, newpass)
             console.log('error')
         }
     };
-    var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"), "password": oldpass, "new_pass": newpass});
+    var data = JSON.stringify({"jwt": readCookie("jwt"), "password": oldpass, "new_pass": newpass});
     xhr.send(data);
 }
 

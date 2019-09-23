@@ -40,7 +40,7 @@ function PopulateList()
         console.log('error')
       }
   };
-  var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt")});
+  var data = JSON.stringify({"jwt": readCookie("jwt")});
   xhr.send(data);
 }
 
@@ -78,7 +78,7 @@ function AddContact()
         alert("ERROR");
       }
   };
-  var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"),
+  var data = JSON.stringify({"jwt": readCookie("jwt"),
    "name": name,"phone": number, "address": address,"email": email, "website": website});
   xhr.send(data);
 }
@@ -111,7 +111,7 @@ function EditContact(contactId, name, number, address, email, website)
       }
   };
   
-  var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"), "contact_id": contactId,
+  var data = JSON.stringify({"jwt": readCookie("jwt"), "contact_id": contactId,
    "name": name,"phone": number, "address": address,"email": email, "website": website});
   xhr.send(data);
 }
@@ -143,7 +143,7 @@ function DeleteContact(contactId)
         alert("ERROR");
       }
   };
-  var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"), "contact_id": contactId});
+  var data = JSON.stringify({"jwt": readCookie("jwt"), "contact_id": contactId});
   xhr.send(data);
 }
 
@@ -188,7 +188,7 @@ function SearchPopulateList()
         console.log('error')
       }
   };
-  var data = JSON.stringify({"jwt": readCookie("jwt"), "expireAt": readCookie("expireAt"), "search": search});
+  var data = JSON.stringify({"jwt": readCookie("jwt"), "search": search});
   xhr.send(data);
 }
 
@@ -208,6 +208,12 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
 {
   var mainContainer = document.getElementById("main-container");
   
+  contactName = (contactName == "") ? ("N/A") : (contactName);
+  contactNumber = (contactNumber == "") ? ("N/A") : (contactNumber);
+  contactAddress = (contactAddress == "") ? ("N/A") : (contactAddress);
+  contactEmail = (contactEmail == "") ? ("N/A") : (contactEmail);
+  contactWebsite = (contactWebsite == "") ? ("N/A") : (contactWebsite);
+
   var accordion = document.createElement("button");
   accordion.className = "accordion";
   mainContainer.appendChild(accordion);
@@ -222,23 +228,23 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   
   var itemName = document.createElement("p");
   itemName.className = "contact-item";
-  itemName.innerHTML = contactName;
+  itemName.innerHTML = "<strong>Name:<br></strong>" + contactName;
 
   var itemPhone = document.createElement("p");
   itemPhone.className = "contact-item";
-  itemPhone.innerHTML = contactNumber;
+  itemPhone.innerHTML = "<strong>Phone:<br></strong>" + contactNumber;
 
   var itemAddress = document.createElement("p");
   itemAddress.className = "contact-item";
-  itemAddress.innerHTML = contactAddress;
+  itemAddress.innerHTML = "<strong>Address:<br></strong>" + contactAddress;
 
   var itemEmail = document.createElement("p");
   itemEmail.className = "contact-item";
-  itemEmail.innerHTML = contactEmail;
+  itemEmail.innerHTML = "<strong>Email:<br></strong>" + contactEmail;
 
   var itemWebsite = document.createElement("p");
   itemWebsite.className = "contact-item";
-  itemWebsite.innerHTML = contactWebsite;
+  itemWebsite.innerHTML = "<strong>Website:<br></strong>" + contactWebsite;
 
   contactContainer.append(itemName);
   contactContainer.append(itemPhone);

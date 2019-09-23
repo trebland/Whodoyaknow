@@ -1,4 +1,5 @@
-createCookie("user_id", -1);
+createCookie("jwt", -1);
+createCookie("expireAt", -1);
 location.replace("main.html");
 
 function createCookie(key, value) {

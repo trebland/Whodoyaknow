@@ -42,7 +42,7 @@ function createUser()
     console.log(fullname);
     console.log(password);
 
-    var isValidUsername = /^[a-zA-Z0-9]+$/.test(name);
+    var isValidUsername = /^[a-zA-Z0-9]+$/.test(username);
     // Name does not contain certain things
     if(!(isValidUsername))
     {
@@ -50,7 +50,7 @@ function createUser()
         return;
     }
 
-    var isValidName = /^[a-zA-Z ]+$/.test(name);
+    var isValidName = /^[a-zA-Z ]+$/.test(fullname);
     // Name does not contain certain things
     if(!(isValidName))
     {
