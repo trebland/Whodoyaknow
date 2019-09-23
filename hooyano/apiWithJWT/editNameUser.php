@@ -43,7 +43,6 @@
 
     // these variables need to remain before if condition
     // $user_id = $input['user_id'];
-    $full_name = $input['full_name'];
     $new_name = $input['new_name'];
 
     // apparently don't need to sanitize the vars when using prepare and bind_param
@@ -55,7 +54,7 @@
         if (isset($user_id))
         {
             // check if only full_name needs to be updated
-            if ($full_name !== $new_name)
+            if (isset($new_name))
             {
                 $update_query = "UPDATE $user_table SET `full_name` = ? WHERE `user_id` = ?";
                 if ($stmt = $con->prepare($update_query))
