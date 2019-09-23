@@ -1,31 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="css/style.css" />
+        <script src="newaccount.js"></script>
+        <link rel="stylesheet" href="style.css" />
         <a class="head" href="main.html"><h1>Hooyano</h1></a>
     </head>
     <body>
         <div class="box">
-            <h3 class="loginleft">Sign Up!</h3>
+            <h3 class="boxhead">Sign Up!</h3>
 
             <label for="username">Username</label>
-            <input type="text" placeholder="Gangsta1" id="username" maxlength="15" required/>
+            <input type="text" placeholder="Username" id="username" maxlength="15"required/>
 
-            <label for="full_name">Name</label>
-            <input type="text" placeholder="First Last" id="full_name" maxlength="50" required/>
+            <label for="full_name">Full Name</label>
+            <input type="text" placeholder="First Last" id="full_name" maxlength="50"required/>
 
             <label for="password1">Password</label>
-            <input type="password" placeholder="Password1" id="password1" required/>
+            <input type="password" placeholder="Password" id="password1" required/>
 
             <label for="password2">Confirm Password</label>
-            <input type="password" placeholder="Password1" id="password2" required/>
+            <input type="password" placeholder="Password" id="password2" required/>
             
-            <button onclick="submitClicked()" class="submitbutton" type="submit">Continue</button>
+            <button class="submitbutton" type="submit">Continue</button>
 
             <span class="altsign"><a href="loginscreen.html">Already have an account?</a></span>
         </div>
-
-        
-        <script src="js/create-user.js"></script>
     </body>
 </html>
