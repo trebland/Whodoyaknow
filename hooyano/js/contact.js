@@ -289,6 +289,7 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   var nameInput = document.createElement("input");
   nameInput.type = "text";
   nameInput.name = "name";
+  nameInput.value = contactName;
   nameContainer.appendChild(nameInput);
 
   var phoneContainer = document.createElement("div");
@@ -299,6 +300,7 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   var phoneInput = document.createElement("input");
   phoneInput.type = "text";
   phoneInput.name = "name";
+  phoneInput.value = contactNumber;
   phoneContainer.appendChild(phoneInput);
 
   var addressContainer = document.createElement("div");
@@ -309,6 +311,7 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   var addressInput = document.createElement("input");
   addressInput.type = "text";
   addressInput.name = "name";
+  addressInput.value = contactAddress;
   addressContainer.appendChild(addressInput);
 
   var emailContainer = document.createElement("div");
@@ -319,6 +322,7 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   var emailInput = document.createElement("input");
   emailInput.type = "text";
   emailInput.name = "name";
+  emailInput.value = contactEmail;
   emailContainer.appendChild(emailInput);
 
   var websiteContainer = document.createElement("div");
@@ -329,6 +333,7 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   var websiteInput = document.createElement("input");
   websiteInput.type = "text";
   websiteInput.name = "name";
+  websiteInput.value = contactWebsite;
   websiteContainer.appendChild(websiteInput);
 
   var submitButton = document.createElement("button");

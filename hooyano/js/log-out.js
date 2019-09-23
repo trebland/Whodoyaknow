@@ -1,6 +1,6 @@
 createCookie("jwt", -1);
 createCookie("expireAt", -1);
-location.replace("main.html");
+location.replace("loginscreen.html");
 
 function createCookie(key, value) {
     let cookie = escape(key) + "=" + escape(value) + ";";
