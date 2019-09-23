@@ -45,7 +45,7 @@
     $website = $input['website'];
     $email = $input['email'];
 
-    if ($input['expireAt'] > time())
+    if ($decoded['exp'] > time())
     {
         // check that contact_id and name exist
         if (isset($input['contact_id']) && isset($input['name']) && isset($user_id))

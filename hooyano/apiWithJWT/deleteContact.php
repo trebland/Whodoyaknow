@@ -43,7 +43,7 @@
 
     $contact_id = $input['contact_id'];
 
-    if ($input['expireAt'] > time())
+    if ($decoded['exp'] > time())
     {
         // check that we have contact_id so that we delete the correct contact
         if (isset($input['contact_id']) && isset($user_id))

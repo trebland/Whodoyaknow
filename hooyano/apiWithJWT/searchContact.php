@@ -43,7 +43,7 @@
 
     $search = $input['search'];
 
-    if ($input['expireAt'] > time())
+    if ($decoded['exp'] > time())
     {
         // both user_id and search are required to find contacts
         if (isset($user_id) && isset($input['search']))

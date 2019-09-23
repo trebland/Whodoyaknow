@@ -49,7 +49,7 @@
     $website = $input['website'];
     $email = $input['email'];
 
-    if ($input['expireAt'] > time())
+    if ($decoded['exp'] > time())
     {
         // bare minimum to create a contact is the user_id and name
         if (isset($user_id) && isset($input['name']))

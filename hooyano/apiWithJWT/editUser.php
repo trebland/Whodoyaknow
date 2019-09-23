@@ -51,7 +51,7 @@
     // apparently don't need to sanitize the vars when using prepare and bind_param
     // $response["user_id"] = $user_id;
 
-    if ($input['expireAt'] > time())
+    if ($decoded['exp'] > time())
     {
         // check that user_id exists
         if (isset($user_id))
