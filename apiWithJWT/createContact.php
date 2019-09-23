@@ -62,17 +62,45 @@
                 {
                     if ($stmt->affected_rows > 0)
                     {
-                        include 'jwtNew.php';
-                        $jwt = JWT::encode($token, $jwtKey);
-                        $response["name"] = $name;
-                        $response["phone"] = $phone;
-                        $response["address"] = $address;
-                        $response["website"] = $website;
-                        $response["email"] = $email;
-                        $response["status"] = 0;
-                        $response["message"] = "Contact created successfully.";
-                        $response["jwt"] = $jwt;
-                        $response["expireAt"] = $expire;
+                        $select_query = "SELECT `contact_id` FROM `$contact_table` WHERE `user_id` = ? AND `name` = ?";
+                        if ($stmt = $con->prepare($select_query))
+                        {
+                            $stmt->bind_param("is", $user_id, $name);
+                            if ($stmt->execute())
+                            {
+                                $stmt->bind_result($contact_id);
+                                if ($stmt->fetch())
+                                {
+                                    include 'jwtNew.php';
+                                    $jwt = JWT::encode($token, $jwtKey);
+                                    $response["contact_id"] = $contact_id;
+                                    $response["name"] = $name;
+                                    $response["phone"] = $phone;
+                                    $response["address"] = $address;
+                                    $response["website"] = $website;
+                                    $response["email"] = $email;
+                                    $response["status"] = 0;
+                                    $response["message"] = "Contact created successfully.";
+                                    $response["jwt"] = $jwt;
+                                    $response["expireAt"] = $expire;
+                                }
+                                else
+                                {
+                                    $response["status"] = 5;
+                                    $response["message"] = "Failed to create contact.";
+                                }
+                            }
+                            else
+                            {
+                                $response["status"] = 4;
+                                $response["message"] = "Failed to execute query.";
+                            }
+                        }
+                        else
+                        {
+                            $response["status"] = 3;
+                            $response["message"] = "Failed to prepare query.";
+                        }
                     }
                     else
                     {
