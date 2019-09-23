@@ -18,7 +18,8 @@
     // user_id needed to lookup matching contacts from the database
     if (isset($input['user_id']))
     {
-        $select_query = "SELECT `contact_id`, `user_id`, `name`, `phone`, `address`, `website`, `email` FROM `$contact_table` WHERE `user_id` = ?";
+        $select_query = "SELECT `contact_id`, `user_id`, `name`, `phone`, `address`, `website`, `email`
+                         FROM `$contact_table` WHERE `user_id` = ? ORDER BY `name`";
         if ($stmt = $con->prepare($select_query))
         {
             $stmt->bind_param("i", $user_id);

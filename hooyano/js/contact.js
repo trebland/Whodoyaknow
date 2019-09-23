@@ -216,12 +216,12 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
 
   var name = document.createElement("span");
   name.className = "contact-name";
-  name.id = contactId;
   name.innerHTML = contactName;
   accordion.appendChild(name);
 
   var contactContainer = document.createElement("div");
   contactContainer.className = "contact-content";
+  contactContainer.id = contactId;
   
   var itemName = document.createElement("p");
   itemName.className = "contact-item";
@@ -334,9 +334,10 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   websiteContainer.appendChild(websiteInput);
 
   var submitButton = document.createElement("input");
-  submitButton.className = "submit-button";
+  submitButton.className = "submit-button " + contactId;
   submitButton.type = "submit";
   submitButton.value = "Confirm Changes";
+  submitButton.onclick = EditContact;
   form.appendChild(submitButton);
 
   var deleteButton = document.createElement("button");
@@ -373,9 +374,10 @@ function CreateAccordion(contactId, contactName, contactNumber, contactAddress, 
   formContainer.appendChild(form);
 
   var submitButton = document.createElement("input");
-  submitButton.className = "submit-button";
+  submitButton.className = "submit-button " + contactId;
   submitButton.type = "submit";
   submitButton.value = "Delete Contact";
+  submitButton.onclick = DeleteContact;
   form.appendChild(submitButton);
 
   // Add our event listener to our accordion

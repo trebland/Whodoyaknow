@@ -40,8 +40,36 @@
             {
                 if ($stmt->affected_rows > 0)
                 {
-                    $response["status"] = 0;
-                    $response["message"] = "Contact created successfully.";
+                    $select_query = "SELECT `contact_id` FROM `$contact_table` WHERE `user_id` = ? AND `name` = ?";
+                    if ($stmt = $con->prepare($select_query))
+                    {
+                        $stmt->bind_param("is", $user_id, $name);
+                        if ($stmt->execute())
+                        {
+                            $stmt->bind_result($contact_id);
+                            if ($stmt->fetch())
+                            {
+                                $response["contact_id"] = $contact_id;
+                                $response["status"] = 0;
+                                $response["message"] = "Contact created successfully.";
+                            }
+                            else
+                            {
+                                $response["status"] = 5;
+                                $response["message"] = "Failed to create contact.";
+                            }
+                        }
+                        else
+                        {
+                            $response["status"] = 4;
+                            $response["message"] = "Failed to execute query.";
+                        }
+                    }
+                    else
+                    {
+                        $response["status"] = 3;
+                        $response["message"] = "Failed to prepare query.";
+                    }
                 }
                 else
                 {
@@ -62,6 +90,7 @@
             $response["status"] = 3;
             $response["message"] = "Failed to prepare query.";
         }
+
     }
     else
     {

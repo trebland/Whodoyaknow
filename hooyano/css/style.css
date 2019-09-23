@@ -1,7 +1,7 @@
 .head {
     font-size: 125%;
     color: black;
-    padding: 10px;
+    padding: 5px;
     text-decoration: none;
     text-align: center;
 }
@@ -12,24 +12,27 @@
     padding: 20px;
     padding-bottom: 30px;
     margin: auto;
-    border: 2px solid black;
-    background-color: #a8a8a8;
+    
+    border: 1px solid rgb(217, 218, 219);
+    background-color: rgb(248, 249, 250);
+    box-shadow: 0px 0px 3px #fefefe;
+}
+.login {
+    margin: 100px;
+    text-align: center;
 }
 
-.loginleft {
+.boxhead {
     color: black;
     text-align: center;
     margin: 10px;
 }
 
 button {
-    background-color: #0000ff;
-    color: white;
-    padding: 5px 10px;
-    margin: 15px 0;
-    border: 1px solid rgb(56, 56, 56);
+    padding: 5px 5px;
     cursor: pointer;
-    width: 100%;
+    margin: 15px 0 15px 67%;
+    
 }
 
 button:hover {
@@ -41,8 +44,11 @@ input[type=text], input[type=password] {
     padding: 5px 5px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    background-color: #fefefe;
+    border: 1px solid rgb(0, 0, 0);
     box-sizing: border-box;
+    border-radius: 2px;
+
 }
 
 span.altsign {
@@ -53,5 +59,5 @@ span.altsign {
 
 body
 {
-    background-color: rgb(240, 240, 240);
+    background-color: #fefefe;
 }
