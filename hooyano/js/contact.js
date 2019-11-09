@@ -11,7 +11,7 @@ function PopulateList()
   // Sending and receiving data in JSON format using POST method
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function () {
+  xhr.onload = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
           var json = JSON.parse(xhr.responseText);
           if(json.status != 0)
